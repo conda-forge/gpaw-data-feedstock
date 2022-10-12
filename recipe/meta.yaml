@@ -10,7 +10,8 @@ source:
   sha256: 6c71682be12a41e17909f65fd7c1a2e4a6a7becb63fbeed2f0f3a1616d6fd41f
 
 build:
-  number: 1
+  noarch: generic
+  number: 2
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('gpaw-data', max_pin='x.x.x') }}
@@ -548,3 +549,4 @@ about:
 extra:
   recipe-maintainers:
     - jan-janssen
+    - gdonval
