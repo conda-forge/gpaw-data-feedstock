@@ -1,23 +1,27 @@
 {% set name = "gpaw-data" %}
-{% set version = "0.9.20000" %}
+{% set version = "1.0.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://wiki.fysik.dtu.dk/gpaw-files/gpaw-setups-{{ version }}.tar.gz
-  sha256: 6c71682be12a41e17909f65fd7c1a2e4a6a7becb63fbeed2f0f3a1616d6fd41f
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/gpaw_data-{{ version }}.tar.gz
+  sha256: 28212110aa04daae333ef1260b281d70b818ad9cf4282078624ee3fc7a8fc05c
 
 build:
-  noarch: generic
-  number: 2
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   run_exports:
     - {{ pin_subpackage('gpaw-data', max_pin='x.x.x') }}
 
 requirements:
-  build:
+  host:
+    - python {{ python_min }}
+    - setuptools
+    - pip
   run:
+    - python >={{ python_min }}
 
 test:
   commands:
@@ -531,6 +535,10 @@ test:
     - test -f ${PREFIX}/share/gpaw/Zr.RPBE.gz
     - test -f ${PREFIX}/share/gpaw/Zr.dzp.basis.gz
     - test -f ${PREFIX}/share/gpaw/Zr.revPBE.gz
+    - pip check
+  requires:
+    - pip
+    - python {{ python_min }}
 
 about:
   home: https://wiki.fysik.dtu.dk/gpaw/setups/setups.html
